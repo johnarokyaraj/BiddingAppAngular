@@ -5,77 +5,89 @@
              <h1> Bidding product Details</h1>
             </div>
     </div>
+
+
     <div class="p-3">
-    <div class="row  p-3">
+        <form novalidate autocomplete="off" class="form-group" [formGroup]="productSelectForm"  (ngSubmit)="productSubmit()">
+
+    <div class="row  p-3 bg-warning rounded">
+
         <div class="col-sm-2">
             </div>
-            <div class="col-sm-3">
-            <h3>Product</h3> 
+            <div class="col-sm-3 align-middle">
+           <p class="text-justify font-weight-bold align-middle"> Product</p> 
             </div>
-            <div class="col-sm-3">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Dropdown button
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
+            <div class="col-sm-3" style="width: 15em;" >
+                <mat-form-field color="accent">
+                <mat-select [(ngModel)]="selectedProductId" formControlName="productId">
+                    <mat-option *ngFor="let product of productList" [value]="product.productId">{{product.productName}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="productId.hasError('required')">Please choose a product</mat-error>
+            </mat-form-field>
             </div>
             <div class="col-sm-2">
-                <button type="submit" mat-button class="btn btn-primary" >Get Details</button>
             </div>
             <div class="col-sm-2">
-                <button type="submit" mat-button class="btn btn-primary" >Add Product</button>
+                <button type="submit" mat-button class="btn btn-primary" (click)="viewProducts(selectedProductId)"  >Get Details</button>
             </div>
         </div>
+    </form>
     </div>
-    <div class="p-3">
+
+
+     <div class="p-3  visible" *ngIf="currProductDiv == 'A'">
     <div class="row p-3" >
         <div class="col-sm-3">Product Name</div>
         <div class="col-sm-2"></div>
-        <div class="col-sm-5"><input type="text" id="disabledTextInput" class="form-control" placeholder="Product Name"></div>
+        <div class="col-sm-5"><label> {{productBids.product.productName}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
         <div class="col-sm-3">Short Description</div>
         <div class="col-sm-2"></div>
-        <div class="col-sm-5"><input type="text" id="disabledTextInput" class="form-control" placeholder="Short Description"></div>
+        <div class="col-sm-5"><label> {{productBids.product.shortDescription}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
         <div class="col-sm-3">Detailed Description</div>
         <div class="col-sm-2"></div>
-        <div class="col-sm-5"><input type="text" id="disabledTextInput" class="form-control" placeholder="Detailed Description"></div>
+        <div class="col-sm-5"><label> {{productBids.product.detailedDescription}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
         <div class="col-sm-3">Category</div>
         <div class="col-sm-2"></div>
-        <div class="col-sm-5"><input type="text" id="disabledTextInput" class="form-control" placeholder="Category"></div>
+        <div class="col-sm-5"><label> {{productBids.product.category}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
         <div class="col-sm-3">Starting Price</div>
         <div class="col-sm-2"></div>
-        <div class="col-sm-5"><input type="text" id="disabledTextInput" class="form-control" placeholder="Starting Price"></div>
+        <div class="col-sm-5"><label> {{productBids.product.startingPrice}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
         <div class="col-sm-3">Bid end date</div>
         <div class="col-sm-2"></div>
-        <div class="col-sm-5"><input type="text" id="disabledTextInput" class="form-control" placeholder="Bid end date"></div>
+        <div class="col-sm-5"><label> {{productBids.product.bidEndDate}}</label></div>
         <div class="col-sm-2"></div>
     </div>
 </div>
-<div style="height:10em" class="p-3">
+<div class="p-3  visible" *ngIf="currProductDiv == 'B'">
+    <div class="row  p-3" >
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6"><p *ngIf="ProductsErrorMessage" class="error">
+            {{ ProductsErrorMessage }}
+          </p> </div>
+        <div class="col-sm-3"></div>
+    </div>
+</div>
+<!-- <div style="height:10em" class="p-3">
     <div class="row p-3">
         <div class="col-sm-3"></div>
         <div class="col-sm-7"> <button type="submit" mat-button class="btn btn-primary" style="width: 30em;" >Product Bids</button></div>
         <div class="col-sm-2"></div>
     </div>
-</div>
+</div> -->
 </div>
 

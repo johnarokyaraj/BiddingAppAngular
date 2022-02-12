@@ -1,10 +1,10 @@
 export class Product {
-    ProductId: string;
-    ProductName: string;
-    ShortDescription: string;
-    DetailedDescription: string;
-    Category: string;
-    StartingPrice: string;
-    BidEndDate: string;
-    SellerId: string;
+    productId: string;
+    productName: string;
+    shortDescription: string;
+    detailedDescription: string;
+    category: string;
+    startingPrice: string;
+    bidEndDate: string;
+    sellerId: string;
 }

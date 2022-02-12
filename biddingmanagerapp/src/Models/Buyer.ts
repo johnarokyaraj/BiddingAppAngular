@@ -1,13 +1,13 @@
 export class Buyer {
-    BuyerId: string;
-    FirstName: string;
-    LastName: string;
-    Address: string;
-    City: string;
-    State: string;
-    Pin: string;
-    Phone: string;
-    Email: string;
-    ProductId: string;
-    BiddingAmount: string;
+    buyerId: string;
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    state: string;
+    pin: string;
+    phone: string;
+    email: string;
+    productId: string;
+    biddingAmount: string;
 }

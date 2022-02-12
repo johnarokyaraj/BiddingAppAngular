@@ -3,6 +3,6 @@ import { Buyer } from "./Buyer";
 
 
 export class ProductBids {
-    Product: Product;
-    Buyers: Array<Buyer>;
+    product: Product;
+    buyers: Array<Buyer>;
 }

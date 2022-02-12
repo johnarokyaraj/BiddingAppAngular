@@ -1,11 +1,11 @@
 export class Seller {
-    SellerId: string;
-    FirstName: string;
-    LastName: string;
-    Address: string;
-    City: string;
-    State: string;
-    Pin: string;
-    Phone: string;
-    Email: string;
+    sellerId: string;
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    state: string;
+    pin: string;
+    phone: string;
+    email: string;
 }
