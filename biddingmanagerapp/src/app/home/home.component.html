@@ -19,7 +19,7 @@
             </div>
             <div class="col-sm-3" style="width: 15em;" >
                 <mat-form-field color="accent">
-                <mat-select [(ngModel)]="selectedProductId" formControlName="productId">
+                <mat-select [(ngModel)]="selectedProductId" formControlName="productId" (selectionChange)="onProductChanged()">
                     <mat-option *ngFor="let product of productList" [value]="product.productId">{{product.productName}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="productId.hasError('required')">Please choose a product</mat-error>
@@ -37,37 +37,37 @@
 
      <div class="p-3  visible" *ngIf="currProductDiv == 'A'">
     <div class="row p-3" >
-        <div class="col-sm-3">Product Name</div>
+        <div class="col-sm-3 font-weight-bold"><p class=" font-weight-bold">Product Name</p></div>
         <div class="col-sm-2"></div>
         <div class="col-sm-5"><label> {{productBids.product.productName}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
-        <div class="col-sm-3">Short Description</div>
+        <div class="col-sm-3 font-weight-bold"><p class=" font-weight-bold">Short Description</p></div>
         <div class="col-sm-2"></div>
         <div class="col-sm-5"><label> {{productBids.product.shortDescription}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
-        <div class="col-sm-3">Detailed Description</div>
+        <div class="col-sm-3 font-weight-bold"><p class=" font-weight-bold">Detailed Description</p></div>
         <div class="col-sm-2"></div>
         <div class="col-sm-5"><label> {{productBids.product.detailedDescription}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
-        <div class="col-sm-3">Category</div>
+        <div class="col-sm-3 font-weight-bold"><p class=" font-weight-bold">Category</p></div>
         <div class="col-sm-2"></div>
         <div class="col-sm-5"><label> {{productBids.product.category}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
-        <div class="col-sm-3">Starting Price</div>
+        <div class="col-sm-3 font-weight-bold"><p class=" font-weight-bold">Starting Price</p></div>
         <div class="col-sm-2"></div>
         <div class="col-sm-5"><label> {{productBids.product.startingPrice}}</label></div>
         <div class="col-sm-2"></div>
     </div>
     <div class="row  p-3" >
-        <div class="col-sm-3">Bid end date</div>
+        <div class="col-sm-3"><p class=" font-weight-bold">Bid end date</p></div>
         <div class="col-sm-2"></div>
         <div class="col-sm-5"><label> {{productBids.product.bidEndDate}}</label></div>
         <div class="col-sm-2"></div>
@@ -76,18 +76,27 @@
 <div class="p-3  visible" *ngIf="currProductDiv == 'B'">
     <div class="row  p-3" >
         <div class="col-sm-3"></div>
-        <div class="col-sm-6"><p *ngIf="ProductsErrorMessage" class="error">
+        <div class="col-sm-6 bg-danger text-white"><p *ngIf="ProductsErrorMessage" class="error text-center font-weight-bold">
             {{ ProductsErrorMessage }}
           </p> </div>
         <div class="col-sm-3"></div>
     </div>
 </div>
-<!-- <div style="height:10em" class="p-3">
+<!-- getBids Button -->
+<div style="height:10em" class="p-3"  *ngIf="currBidsDiv == 'A'">
     <div class="row p-3">
         <div class="col-sm-3"></div>
         <div class="col-sm-7"> <button type="submit" mat-button class="btn btn-primary" style="width: 30em;" >Product Bids</button></div>
         <div class="col-sm-2"></div>
     </div>
-</div> -->
+</div>
+<div class="p-3  visible" *ngIf="currBidsDiv == 'B'">
+    <div class="row  p-3" >
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6 bg-danger text-white"><p *ngIf="ProductBidsErrorMessage" class="error text-center font-weight-bold">
+            {{ ProductBidsErrorMessage }}
+          </p> </div>
+        <div class="col-sm-3"></div>
+    </div>
 </div>
 

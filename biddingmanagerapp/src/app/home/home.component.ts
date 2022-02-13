@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
 productList:Array<Product>;
 productBids:ProductBids;
 ProductsErrorMessage: string;
+ProductBidsErrorMessage: string;
+
 
   constructor(private router: Router,
     private formBuilder: FormBuilder,
@@ -35,6 +37,8 @@ ProductsErrorMessage: string;
     public productSelectForm: FormGroup;
 
     currProductDiv: string='';
+    currBidsDiv: string='';
+
 
   ngOnInit():void {
     this.productSelectForm= this.formBuilder.group({
@@ -81,8 +85,19 @@ ProductsErrorMessage: string;
       console.log("productList and Bids");
       console.log(this.productBids);
       if(this.productBids!==null){
-        this.currProductDiv="A";}
-        else if (this.productBids.buyers){}
+        this.currProductDiv="A";
+         if (this.productBids.buyers!==null){
+          this.currBidsDiv="A";
+          this.showProductBids(this.productBids.buyers);
+          console.log('A');
+        }
+        else{
+        this.ProductBidsErrorMessage = "No Active Bids Found";
+          this.currBidsDiv="B";
+          console.log('B');
+
+        }
+      }
         else{ this.currProductDiv="B";}
     }, (err) => {
       if (err.status === 404) {
@@ -94,7 +109,15 @@ ProductsErrorMessage: string;
         this.currProductDiv="A";}
         else{ this.currProductDiv="B";}
     });
+  }
 
-   
+  showProductBids(bids:any):void{
+    console.log("bids");
+    console.log(bids);
+  }
+
+  onProductChanged():void{
+    this.currProductDiv="";
+    this.currBidsDiv="";
   }
 }
