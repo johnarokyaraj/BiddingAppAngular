@@ -29,6 +29,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatPaginatorModule} from '@angular/material/paginator';
 // import { NgxMatDatetimePickerModule, NgxMatTimepickerModule,NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 // import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSortModule } from "@angular/material/sort";
+
 
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -69,11 +72,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     MatDatepickerModule,
     MatNativeDateModule,
-     MatPaginatorModule//,
-    // MatMomentDateModule,
-    // NgxMatDatetimePickerModule,
-    // NgxMatTimepickerModule,
-    // NgxMatNativeDateModule
+     MatPaginatorModule,MatSortModule,
+     MatProgressSpinnerModule
 
   ],
   providers: [DatePipe,

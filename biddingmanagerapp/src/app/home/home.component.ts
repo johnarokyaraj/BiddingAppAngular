@@ -2,10 +2,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import {MatPaginator,MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+
 import { Product } from 'src/Models/Product';
 import { SellerService } from 'src/Service/seller.service';
 import { RouterService } from 'src/Service/router.service';
 import { ProductBids } from 'src/Models/ProductBids';
+import { Buyer } from 'src/Models/Buyer';
+import { BuyerView } from 'src/Models/BuyerView';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +23,14 @@ productList:Array<Product>;
 productBids:ProductBids;
 ProductsErrorMessage: string;
 ProductBidsErrorMessage: string;
+dataSource=new MatTableDataSource<Buyer>([]);
+displayedColumns: string[]=["biddingAmount", "firstName", "email","phone"];
+// ELEMENT_DATA: BuyerView[] = [
+//   {'biddingAmount':'1','firstName':'Appolo','email':'Ent','phone':'John'},
+//   {'biddingAmount':'2','firstName':'Bilroth','email':'Ent','phone':'John'},
 
+// ];
+@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private router: Router,
     private formBuilder: FormBuilder,
@@ -38,12 +50,13 @@ ProductBidsErrorMessage: string;
 
     currProductDiv: string='';
     currBidsDiv: string='';
-
+    currBidsGridDiv:string='';
 
   ngOnInit():void {
     this.productSelectForm= this.formBuilder.group({
       productId:['',[Validators.required]]
     } , { updateOn: 'change' });
+    this.dataSource.paginator = this.paginator;
 
    
     this.getProducts();
@@ -88,7 +101,7 @@ ProductBidsErrorMessage: string;
         this.currProductDiv="A";
          if (this.productBids.buyers!==null){
           this.currBidsDiv="A";
-          this.showProductBids(this.productBids.buyers);
+          // this.showProductBids(this.productBids.buyers);
           console.log('A');
         }
         else{
@@ -111,13 +124,24 @@ ProductBidsErrorMessage: string;
     });
   }
 
-  showProductBids(bids:any):void{
+  showProductBids():void{
     console.log("bids");
-    console.log(bids);
+    console.log(this.productBids.buyers);
+    this.displayedColumns= ["biddingAmount", "firstName", "email","phone"];
+     
+    this.dataSource.data =this.productBids.buyers;
+    this.dataSource.paginator = this.paginator;
+    this.currBidsGridDiv="A";
+    console.log('Grid Loaded');
+
   }
 
   onProductChanged():void{
     this.currProductDiv="";
     this.currBidsDiv="";
+    this.currBidsGridDiv="";
+
   }
+  
+  
 }
