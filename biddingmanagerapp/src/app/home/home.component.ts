@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -11,6 +11,7 @@ import { RouterService } from 'src/Service/router.service';
 import { ProductBids } from 'src/Models/ProductBids';
 import { Buyer } from 'src/Models/Buyer';
 import { BuyerView } from 'src/Models/BuyerView';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,8 @@ productList:Array<Product>;
 productBids:ProductBids;
 ProductsErrorMessage: string;
 ProductBidsErrorMessage: string;
+bidingList:Array<Buyer>;
+Bidding:Buyer;
 dataSource=new MatTableDataSource<Buyer>([]);
 displayedColumns: string[]=["biddingAmount", "firstName", "email","phone"];
 // ELEMENT_DATA: BuyerView[] = [
@@ -31,6 +34,8 @@ displayedColumns: string[]=["biddingAmount", "firstName", "email","phone"];
 
 // ];
 @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+@ViewChild(MatSort) sort: MatSort;
+// @ViewChild('input') input: ElementRef;
 
   constructor(private router: Router,
     private formBuilder: FormBuilder,
@@ -128,12 +133,12 @@ displayedColumns: string[]=["biddingAmount", "firstName", "email","phone"];
     console.log("bids");
     console.log(this.productBids.buyers);
     this.displayedColumns= ["biddingAmount", "firstName", "email","phone"];
-     
-    this.dataSource.data =this.productBids.buyers;
+    this.sellerService.FilterShowproductbids(this.RouterService.getProductId()).subscribe((resp: any) => {
+    this.dataSource.data =resp;
     this.dataSource.paginator = this.paginator;
     this.currBidsGridDiv="A";
     console.log('Grid Loaded');
-
+    },(err) => {});
   }
 
   onProductChanged():void{

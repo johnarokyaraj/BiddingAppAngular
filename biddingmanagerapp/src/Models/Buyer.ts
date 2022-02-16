@@ -1,3 +1,5 @@
+// import * as internal from "stream";
+
 export class Buyer {
     buyerId: string;
     firstName: string;
@@ -10,4 +12,9 @@ export class Buyer {
     email: string;
     productId: string;
     biddingAmount: string;
+    TotalRows:number;
+    PageCount:number;
+    PageNo:number;
+    PageSize:number;
+
 }

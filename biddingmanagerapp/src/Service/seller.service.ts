@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../Models/Product';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ProductBids } from 'src/Models/ProductBids';
+import { Buyer } from 'src/Models/Buyer';
 // import { AuthenticationService } from '../services/authentication.service';
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,28 @@ import { ProductBids } from 'src/Models/ProductBids';
       //   headers: new HttpHeaders()
       //     .set('Authorization', `Bearer ${this.authService.getBearerToken()}`)
       });
+    console.log('Showproductbids');
+    console.log(ELEMENT_DATA);
+    return ELEMENT_DATA;
+  }
+  
+  FilterShowproductbids(
+    productId:string, sortColumn = 'BuyerId', sortOrder = 'ASC',
+    pageNo = 1, pageSize = 3):  Observable<Buyer[]> {
+
+      let ELEMENT_DATA=this.httpClient.get<Array<Buyer>>(this.sellerUrl + 'GetProductBids/'+
+      `${productId}`+'/'+`${pageNo}`+'/'+`${pageSize}`+'/'+`${sortColumn}`+'/'+`${sortOrder}`
+      
+    //   , {
+    //     params: new HttpParams()
+    //         .set('productId', productId.toString())
+    //         .set('sortColumn', sortColumn)
+    //         .set('sortOrder', sortOrder)
+    //         .set('pageNo', pageNo.toString())
+    //         .set('pageSize', pageSize.toString())
+    // }
+    );
+    
     console.log('Showproductbids');
     console.log(ELEMENT_DATA);
     return ELEMENT_DATA;
