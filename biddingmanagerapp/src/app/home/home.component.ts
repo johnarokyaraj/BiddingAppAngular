@@ -25,7 +25,7 @@ productBids:ProductBids;
 ProductsErrorMessage: string;
 ProductBidsErrorMessage: string;
 bidingList:Array<Buyer>;
-Bidding:Buyer;
+BiddingRow:Buyer;
 dataSource=new MatTableDataSource<Buyer>([]);
 displayedColumns: string[]=["biddingAmount", "firstName", "email","phone"];
 // ELEMENT_DATA: BuyerView[] = [
@@ -133,12 +133,22 @@ displayedColumns: string[]=["biddingAmount", "firstName", "email","phone"];
     console.log("bids");
     console.log(this.productBids.buyers);
     this.displayedColumns= ["biddingAmount", "firstName", "email","phone"];
+    this.paginator.length
     this.sellerService.FilterShowproductbids(this.RouterService.getProductId()).subscribe((resp: any) => {
     this.dataSource.data =resp;
+    this.BiddingRow=resp[0];
+    this.paginator.length=this.BiddingRow.TotalRows;
     this.dataSource.paginator = this.paginator;
     this.currBidsGridDiv="A";
     console.log('Grid Loaded');
-    },(err) => {});
+    console.log(this.BiddingRow);
+    },(err) => {
+      if (err.status === 404) {
+        this.ProductsErrorMessage = err.error;
+      } 
+      console.log('error', err);
+   
+    });
   }
 
   onProductChanged():void{
