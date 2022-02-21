@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -6,6 +6,8 @@ import {MatPaginator,MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {debounceTime, distinctUntilChanged, startWith, tap, delay} from 'rxjs/operators';
 import {merge, fromEvent} from "rxjs";
+import { MatSortModule, Sort } from '@angular/material/sort';
+import {PageEvent} from '@angular/material/paginator';
 
 import { Product } from 'src/Models/Product';
 import { SellerService } from 'src/Service/seller.service';
@@ -13,13 +15,14 @@ import { RouterService } from 'src/Service/router.service';
 import { ProductBids } from 'src/Models/ProductBids';
 import { Buyer } from 'src/Models/Buyer';
 import { MatSort } from '@angular/material/sort';
+// import * as internal from 'stream';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit,AfterViewInit {
 
 productList:Array<Product>;
 productBids:ProductBids;
@@ -30,8 +33,14 @@ BiddingRow:Buyer;
 dataSource=new MatTableDataSource<Buyer>([]);
 displayedColumns: string[]=["biddingAmount", "firstName", "email","phone"];
 TotalRowsCount:number=1;
-@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-@ViewChild(MatSort,{static: true}) sort: MatSort;
+sortDirectionText:string;
+// MatPaginator Output
+pageEvent: PageEvent;
+public pageSize = 10;
+public currentPage = 0;
+public totalSize = 0;
+@ViewChild(MatPaginator) paginator: MatPaginator;
+@ViewChild(MatSort) sort: MatSort;
 // @ViewChild('input') input: ElementRef;
 
   constructor(private router: Router,
@@ -62,13 +71,14 @@ TotalRowsCount:number=1;
 
   ngAfterViewInit() {
     console.log('Called-ngAfterViewInit');
-    this.dataSource.sort = this.sort;
     // this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     // merge(this.sort.sortChange, this.paginator.page)
     //     .pipe(
     //         tap(() => this.loadLessonsPage())
     //     )
     //     .subscribe();
+    this.dataSource.sort = this.sort;
+
   }
   //Get products from service
   getProducts(): void {
@@ -143,13 +153,18 @@ TotalRowsCount:number=1;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.currBidsGridDiv="A";
+    // this.pageIndexShown=this.paginator.pageIndex;
+    // this.pageSizeShown=this.paginator.pageSize;
+
     console.log('Grid Loaded');
-  this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 1);
-  merge(this.sort.sortChange, this.paginator.page)
-  .pipe(
-      tap(() => this.loadLessonsPage())
-  )
-  .subscribe();  
+//     setTimeout(() => {
+//   this.sort.sortChange.subscribe(() => this.paginator.pageIndex =0);
+//   merge(this.sort.sortChange, this.paginator.page)
+//   .pipe(
+//       tap(() => this.loadLessonsPage())
+//   )
+//   .subscribe();  
+// }, 500);
   },(err) => {
       if (err.status === 404) {
         this.ProductsErrorMessage = err.error;
@@ -161,7 +176,8 @@ TotalRowsCount:number=1;
   }
   loadLessonsPage() {
     console.log('Called');
-    this.sellerService.FilterShowproductbids(this.RouterService.getProductId(),'BiddingAmount',this.sort.direction,this.paginator.pageIndex,this.paginator.pageSize).subscribe((resp: any) => {
+
+    this.sellerService.FilterShowproductbids(this.RouterService.getProductId(),'BiddingAmount',this.sortDirectionText,this.currentPage,this.pageSize).subscribe((resp: any) => {
       this.dataSource.data =resp;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -181,5 +197,21 @@ TotalRowsCount:number=1;
 
   }
   
-  
+  announceSortChange(sortState: Sort) {
+    console.log('announceSortChange'+sortState.direction);
+    if (sortState.direction==='desc') {
+      this.sortDirectionText='desc';
+    } else {
+      this.sortDirectionText='asc';
+    }
+    this.loadLessonsPage();
+  }
+  handlePage(e: any) {
+    this.currentPage = e.pageIndex;
+    this.pageSize = e.pageSize;
+    // this.iterator();
+    this.loadLessonsPage();
+
+  }
+
 }

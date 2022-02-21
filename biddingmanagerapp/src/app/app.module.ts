@@ -64,6 +64,9 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     ReactiveFormsModule,
     MatDialogModule,
@@ -71,9 +74,7 @@ const appRoutes: Routes = [
     CdkTableModule,
     HttpClientModule,
     MatDatepickerModule,
-    MatNativeDateModule,
-     MatPaginatorModule,MatSortModule,
-     MatProgressSpinnerModule
+    MatNativeDateModule
 
   ],
   providers: [DatePipe,

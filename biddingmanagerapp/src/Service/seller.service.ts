@@ -36,20 +36,11 @@ import { Buyer } from 'src/Models/Buyer';
   }
   
   FilterShowproductbids(
-    productId:string, sortColumn = 'BuyerId', sortOrder = 'ASC',
+    productId:string, sortColumn = 'BuyerId', sortOrder = 'asc',
     pageNo = 1, pageSize = 3):  Observable<Buyer[]> {
 
       let ELEMENT_DATA=this.httpClient.get<Array<Buyer>>(this.sellerUrl + 'GetProductBids/'+
-      `${productId}`+'/'+`${pageNo}`+'/'+`${pageSize}`+'/'+`${sortColumn}`+'/'+`${sortOrder}`
-      
-    //   , {
-    //     params: new HttpParams()
-    //         .set('productId', productId.toString())
-    //         .set('sortColumn', sortColumn)
-    //         .set('sortOrder', sortOrder)
-    //         .set('pageNo', pageNo.toString())
-    //         .set('pageSize', pageSize.toString())
-    // }
+      `${productId}`+'/'+`${pageNo}`+'/'+`${pageSize}`+'/'+`${sortColumn}`+'/'+`${sortOrder.toUpperCase()}`
     );
     
     console.log('Showproductbids');

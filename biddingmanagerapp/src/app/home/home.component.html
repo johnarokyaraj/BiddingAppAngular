@@ -103,9 +103,10 @@
     <div class="p-3  visible" *ngIf="currBidsGridDiv == 'A'">
         <div  class="row  p-3">
            <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource" 
-            
-              matSortActive="biddingAmount" matSortDirection="ASC" matSortDisableClear>
+            <table mat-table [dataSource]="dataSource" matSort
+              matSortActive="biddingAmount" matSortDirection="asc"
+              (matSortChange)="announceSortChange($event)"
+              matSortDisableClear>
   
                 <ng-container matColumnDef="biddingAmount">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> BiddingAmount </th>
@@ -134,7 +135,11 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
                 
             </table>
-            <mat-paginator [length]="TotalRowsCount" [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons></mat-paginator>
+            <mat-paginator [length]="TotalRowsCount" [pageSize]="pageSize"
+            [pageSizeOptions]="[3, 5, 10]" 
+            [showFirstLastButtons]
+            [pageIndex]="currentPage" (page)="handlePage($event)"
+            ></mat-paginator>
            </div>
         </div>
     </div>
