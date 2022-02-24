@@ -209,7 +209,6 @@ public totalSize = 0;
   handlePage(e: any) {
     this.currentPage = e.pageIndex;
     this.pageSize = e.pageSize;
-    // this.iterator();
     this.loadLessonsPage();
 
   }
