@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - biddingmanagerapp
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to registry
+      uses: docker/login-action@v1
+      with:
+        registry: https://biddingappcontregistry.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_b48560fed0514c93a341319e08818e15 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_5ff7a082bcb94a69b3848a6cb6d26727 }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: biddingappcontregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_b48560fed0514c93a341319e08818e15 }}/angularapp:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'biddingmanagerapp'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_37c9e6b2125f46a293b694ba69c85e3d }}
+        images: 'biddingappcontregistry.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_b48560fed0514c93a341319e08818e15 }}/angularapp:${{ github.sha }}'
