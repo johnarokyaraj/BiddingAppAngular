@@ -53,4 +53,4 @@ jobs:
           app-name: 'biddingappmanager'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AD3D6900ACAB41D6A56CA2F2D3B86F4B }}
-          package: .
+          package: ./dist/biddingmanagerapp
