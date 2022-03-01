@@ -19,13 +19,13 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: '14.x'
 
       - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
-          
+          npm run test --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'biddingappmanager'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0AD7EA351E874316AFE9CDCA08EB8D5D }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AD3D6900ACAB41D6A56CA2F2D3B86F4B }}
           package: .
