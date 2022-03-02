@@ -13,7 +13,9 @@ import { Buyer } from 'src/Models/Buyer';
   
     // constructor(private httpClient: HttpClient, private authService:AuthenticationService) { 
     constructor(private httpClient: HttpClient) { 
-        this.sellerUrl = 'http://host.docker.internal:8081/api/v1/seller/';
+        // this.sellerUrl = 'http://host.docker.internal:8081/api/v1/seller/';
+        this.sellerUrl = 'https://biddingappapi.azurewebsites.net/api/v1/seller/';
+
     }
 
     public  getProducts():Observable<Product[]>{
